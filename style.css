@@ -1,0 +1,123 @@
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #eeeee8;
+}
+h1 {
+  font-size: 3rem;
+  text-align: center;
+}
+.buttons {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+}
+.button-group {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  width: min(90vw, 445px);
+}
+button {
+  flex: 1 1 0;
+  background-color: #f1f1f1;
+  box-sizing: border-box;
+  height: 55px;
+  font-size: 1rem;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  border: 1px solid black;
+  transition: box-shadow 0.2s ease-out;
+}
+button:hover {
+  box-shadow: 3px 4px 0 rgba(0, 0, 0, 0.2);
+  border: 2px solid black;
+  cursor: pointer;
+}
+.board {
+  margin-top: 70px;
+  display: grid;
+  grid-template-areas:
+    "ranks tiles"
+    "nothing files";
+  --board-size: calc(min(600px, 90vw) - 1.2rem);
+  --tile-size: calc((var(--board-size)) / 8);
+  margin-left: calc(0px - var(--board-size) / 11);
+  font-size: min(1.2rem, 5vw);
+}
+.board .ranks {
+  grid-area: ranks;
+  display: flex;
+  flex-direction: column-reverse;
+  width: calc(var(--board-size) / 10);
+  height: var(--board-size);
+}
+.board .ranks > * {
+  height: var(--tile-size);
+  display: grid;
+  place-items: center;
+}
+.board .files {
+  grid-area: files;
+  display: flex;
+  flex-direction: row;
+  width: var(--board-size);
+  height: calc(var(--board-size) / 10);
+}
+.board .files > * {
+  width: var(--tile-size);
+  display: grid;
+  place-items: center;
+}
+.board .tiles {
+  position: relative;
+  grid-area: tiles;
+  display: grid;
+  width: var(--board-size);
+  border: 2px solid black;
+  grid-template-rows: repeat(8, 1fr);
+  grid-template-columns: repeat(8, 1fr);
+}
+.board .tiles .tile-bl {
+  background-color: #27292d;
+}
+.board .tiles .tile-wh {
+  background-color: #eeeee8;
+}
+.board .tiles .tile.highlight {
+  border: min(5px, 0.8vw) solid #419f7a;
+}
+body.place-knight .tiles .tile:hover {
+  cursor: url("./knight-cursor.svg"), auto;
+  border: 4px solid hsl(156, 83%, 34%);
+}
+body.place-destination .tiles .tile:hover {
+  cursor: url("./red-cross-cursor.svg"), auto;
+  border: 4px solid #b71f2e;
+}
+.knight,
+.destination {
+  position: absolute;
+  background-repeat: no-repeat;
+  background-size: 70%;
+  background-position: center;
+  width: calc(var(--board-size) / 8);
+  height: calc(var(--board-size) / 8);
+  left: calc(calc(var(--x-position) - 1) * var(--tile-size));
+  top: calc(calc(var(--y-position) - 1) * var(--tile-size));
+}
+.knight {
+  background-image: url("./knight.svg");
+  transition: all 0.2s ease-out;
+}
+.destination {
+  background-image: url("./red-cross.svg");
+}
+.knight:not(.show),
+.destination:not(.show) {
+  display: none;
+}
